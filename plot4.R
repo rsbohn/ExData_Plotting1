@@ -7,8 +7,13 @@ library(data.table)
 source("./p1-tidy.R")
 
 DT=fread(tidyfile)
+# note: column names are changed in "tidy-households.txt"
 DT[,timestamp := as.POSIXct(date)]
 
+# use the EN_us locale
+Sys.setlocale(locale = "en_US.UTF-8")
+
+png(filename="plot4.png", width=480, height=480, units="px")
 par(mfrow = c(2,2))
 # first plot: Global Active Power
 plot(DT$timestamp, DT$global_power, type = "l", xlab = "",
@@ -31,5 +36,4 @@ legend("topright", bty = "n", lwd = 2, col = c("black", "red", "blue"),
 plot(DT$timestamp, DT$global_reactive_power, type="l", xlab = "datetime",
      ylab = "Global_reactive_power")
 
-dev.copy(png, file="plot4.png")
 dev.off()

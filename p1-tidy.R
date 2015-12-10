@@ -1,6 +1,11 @@
+# p1-tidy.R
+# Randall Bohn
+# exdata-035
 # download the data for exdata-035
+# make it tidy, save for use in plot*.R.
 # project 1
 
+# download the source file, extract from the .zip
 download_extract <- function(url) {
   datafile <- "household_power_consumption.zip"
   if (!file.exists(datafile)) {
@@ -40,7 +45,7 @@ make_tidy <- function(input, output) {
   colnames(DT) <- colnames(HEADERS)
   rm(HEADERS)
   # make sure we got the target days with 1440 observations each
-  table(DT$Date)
+  #table(DT$Date)
   
   # Now force the numeric columns:
   # fread() won't assign NA values so we have to do it after.
@@ -52,10 +57,15 @@ make_tidy <- function(input, output) {
   #sapply(DT$Date, function(d) strptime(d, "%d/%m/%Y", tz="GMT"))
   DT[Date=="1/2/2007", date:=paste("2007-02-01", Time)]
   DT[Date=="2/2/2007", date:=paste("2007-02-02", Time)]
+  
+  # discard the Date and Time column as we no longer need them
   DT[, Date:=NULL]
   DT[, Time:=NULL]
+  
+  # use tidy column names in place of the originals
   colnames(DT) <- c("global_power","global_reactive_power", "voltage", "global_current", 
                        "zone1meter", "zone2meter", "zone3meter", "date")
+  # save to the output file as CSV, no row names
   write.table(DT, file=output, sep=",", row.names = FALSE)
 }
 
