@@ -12,7 +12,7 @@ DT[,timestamp := as.POSIXct(date)]
 # use the EN_us locale
 Sys.setlocale(locale = "en_US.UTF-8")
 
-png(filename="plot4.png", width=480, height=480, units="px")
+png(filename="plot2.png", width=480, height=480, units="px")
 # http://stackoverflow.com/questions/28774111/creating-complicated-line-plots-in-r
 # Dates and Times in "R Programming for Data Science" R. Peng 2015-11-30
 
